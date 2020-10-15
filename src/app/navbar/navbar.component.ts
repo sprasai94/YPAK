@@ -7,11 +7,18 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   appUser: AppUser;
   constructor(private auth: AuthService) {
-  
-    auth.appUser$.subscribe(appUser => this.appUser = this.appUser);
+
+  }
+
+  logout() {
+    this.auth.logout();
+  }
+
+  async ngOnInit() {
+    this.auth.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
   

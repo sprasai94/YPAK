@@ -1,3 +1,5 @@
+import { AdminAuthGuard } from './service/admin-auth-guard.service';
+import { AuthGuard } from './service/auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -31,15 +34,21 @@ import { UserManagementComponent } from './user-management/user-management.compo
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    NgbModule,
     RouterModule.forRoot([
       { path:'', component: HomeComponent },
       { path: 'login', component: LoginComponent },
-      { path:'menu', component: MenuComponent },
-      { path: 'user-management', component: UserManagementComponent}
+      { path:'menu', component: MenuComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard, AdminAuthGuard]}
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [ 
+    AuthGuard,
+    AdminAuthGuard
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

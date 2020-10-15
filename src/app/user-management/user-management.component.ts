@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../auth/auth.service';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-management',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserManagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
+
+  save(user) {
+    this.auth.createUser(user.email, user.password);
+  }
 
   ngOnInit(): void {
   }
