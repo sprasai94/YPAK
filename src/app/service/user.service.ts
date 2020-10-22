@@ -10,11 +10,6 @@ import * as firebase from 'firebase';
 export class UserService {
   users: any[]
   constructor(private db: AngularFireDatabase) { 
-    // db.list('/users').valueChanges()
-    //   .subscribe(users => {
-    //     this.users = users;
-    //     console.log(this.users);
-    //   });
   }
 
   save(user: firebase.User) {
@@ -26,5 +21,8 @@ export class UserService {
   }
   get(uid: string): AngularFireObject<AppUser> {
     return this.db.object('/users/' + uid);
+  }
+  getAll() {
+    return this.db.list('/users');
   }
 }
