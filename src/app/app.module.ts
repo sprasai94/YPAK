@@ -36,10 +36,24 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireAuthModule,
     NgbModule,
     RouterModule.forRoot([
-      { path:'', component: HomeComponent },
-      { path: 'login', component: LoginComponent },
-      { path:'menu', component: MenuComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard, AdminAuthGuard]}
+    { path:'', 
+      component: HomeComponent
+    },
+    { path: 'login',
+       component: LoginComponent 
+    },
+    { path:'menu', 
+      component: MenuComponent, 
+      canActivate: [AuthGuard, AdminAuthGuard] 
+    },
+    { path: 'user-management/:id', 
+    component: UserManagementComponent, 
+    canActivate: [AuthGuard, AdminAuthGuard]
+    },
+    { path: 'user-management', 
+      component: UserManagementComponent, 
+      canActivate: [AuthGuard, AdminAuthGuard]
+    }
     ]),
     BrowserAnimationsModule,
     NgbModule

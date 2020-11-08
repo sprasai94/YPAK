@@ -2,6 +2,7 @@ import { AppUser } from '../models/app-user';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import * as firebase from 'firebase';
+import { getObservableFromList } from '../firebase-extension';
 
 
 @Injectable({
@@ -19,10 +20,16 @@ export class UserService {
 
     });
   }
+
   get(uid: string): AngularFireObject<AppUser> {
     return this.db.object('/users/' + uid);
   }
+  
+  update(userId, user) {
+    this.db.object('/users/'+ userId).update(user);
+  }
   getAll() {
-    return this.db.list('/users');
+    let list = this.db.list('/users');
+    return getObservableFromList(list);
   }
 }

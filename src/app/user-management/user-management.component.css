@@ -1,0 +1,19 @@
+.list-group-item {
+    padding: 4px 10px;
+    height: 30px;
+    font-size:0.7rem;
+    
+}
+
+ul {
+    list-style: none;
+    max-height: 150px;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    text-indent: auto;
+}
+
+li{
+    line-height:15px;
+}

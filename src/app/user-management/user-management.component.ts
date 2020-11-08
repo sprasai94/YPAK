@@ -1,10 +1,10 @@
+import { AppUser } from './../models/app-user';
 import { UserService } from './../service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit} from '@angular/core';
-import { take} from 'rxjs/operators';
-import { pipe } from 'rxjs-compat';
+import { take, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-management',
@@ -12,21 +12,54 @@ import { pipe } from 'rxjs-compat';
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent implements OnInit {
-  users$;
+  users: AppUser[] = [];
+  filteredUsers: AppUser[] = [];
+  user = {};
+  id;
+
   constructor(
     private auth: AuthService, 
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { 
-      this.users$ = this.userService.getAll();
-    }
+      this.id = this.route.snapshot.paramMap.get('id');
+      if (this.id) this.userService.get(this.id).valueChanges().pipe(take(1)).
+        subscribe(u => this.user = u);
+     }
 
   save(user) {
-    this.auth.createUser(user);
+    if (this.id) this.userService.update(this.id, user);
+    else this.auth.createUser(user);
     this.router.navigate(['/user-management']);
+  
   }
 
-  ngOnInit(): void {
+  get(userId){
+    return this.userService.get(userId);
+  }
+  update(userId, user) {
+    this.userService.update(userId, user);
+  }
+
+
+  async ngOnInit() {
+    this.populateUsers();
+  }
+
+  private populateUsers() {
+    this.userService
+      .getAll()
+      .pipe(switchMap(users => {
+        this.users = this.filteredUsers= users;
+        return this.route.queryParamMap;
+      })).subscribe()
+  }
+
+  filter(query: string) {
+    console.log(query)
+    this.filteredUsers = (query) ?
+     this.users.filter(u => u.name.toLowerCase().includes(query.toLowerCase())) :
+     this.users;
   }
 
 }
