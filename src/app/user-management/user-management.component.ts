@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit} from '@angular/core';
 import { take, switchMap} from 'rxjs/operators';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user-management',
@@ -32,6 +33,9 @@ export class UserManagementComponent implements OnInit {
     else this.auth.createUser(user);
     this.router.navigate(['/user-management']);
   
+  }
+  clearForm(form:NgForm) {
+    form.resetForm();
   }
 
   get(userId){

@@ -52,7 +52,7 @@
                               <button class="btn btn-primary btn-block" type="submit" [disabled]="!f.form.valid">Save</button>
                             </div>
                             <div class="col-4">
-                              <button class="btn btn-primary btn-block" type="button" routerLink="/user-management" >New</button>
+                              <button class="btn btn-primary btn-block" type="button" (click)="clearForm(f)" >New</button>
                             </div>
                             <div class="col-4">
                                 <button class="btn btn-primary btn-block" type="button" routerLink="/menu" >Menu</button>

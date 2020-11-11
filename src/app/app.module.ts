@@ -1,3 +1,4 @@
+import { FileService } from './service/fileservice.service';
 import { AdminAuthGuard } from './service/admin-auth-guard.service';
 import { AuthGuard } from './service/auth-guard.service';
 import { HomeComponent } from './home/home.component';
@@ -7,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule} from '@angular/fire/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from './../environments/environment';
@@ -17,6 +19,7 @@ import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VideoAddComponent } from './video-add/video-add.component';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     LoginComponent,
     MenuComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    VideoAddComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
     NgbModule,
     RouterModule.forRoot([
     { path:'', 
@@ -53,6 +58,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     { path: 'user-management', 
       component: UserManagementComponent, 
       canActivate: [AuthGuard, AdminAuthGuard]
+    },
+    {
+      path: 'video-add',
+      component: VideoAddComponent,
+      canActivate: [AuthGuard, AdminAuthGuard]
     }
     ]),
     BrowserAnimationsModule,
@@ -60,7 +70,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [ 
     AuthGuard,
-    AdminAuthGuard
+    AdminAuthGuard,
+    FileService
   ],
 
   bootstrap: [AppComponent]

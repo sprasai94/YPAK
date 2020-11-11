@@ -1,0 +1,63 @@
+<div class="container pt-3">
+    <div class="row justify-content-sm-center">
+      <div class="col-md-8">
+        <div class="card border-info">
+          <div class="card-header justify-content-md-center bg-primary text-light">Your Political Action Kit- Video Maintenance</div>
+          <div class="card-body">
+            
+            <div class="row">
+                <div class="col-md-7">
+                    <form #f="ngForm" (ngSubmit)='save(f.value);f.reset()'>
+                        <div class="form-group">
+                            <label for="leftvideo" >Left Video</label>
+                            <input #leftvideo="ngModel" ngModel name="leftvideo" id="leftvideo" type="file" (change)="onSelect($event)" required>
+                            <!-- <div class="alert alert-danger" *ngIf="leftvideo.touched && leftvideo.invalid">
+                                Left Video is required.
+                            </div> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rightvideo" >Right Video</label>
+                            <input #rightvideo="ngModel" ngModel name="rightvideo" id="rightvideo" type="file" (change)="onSelect($event)" required>
+                            <!-- <div class="alert alert-danger" *ngIf="leftvideo.touched && leftvideo.invalid">
+                                Left Video is required.
+                            </div> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title" >Title</label>
+                            <input #title="ngModel" ngModel name="title" id="title" type="text" class="form-control" required>
+                            <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+                                Title is required.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" >Description</label>
+                            <textarea #description="ngModel" ngModel name="description" id="description" type="text" class="form-control" required>
+                            </textarea>
+                            <div class="alert alert-danger" *ngIf="description.touched && description.invalid">
+                                Description is required.
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-4">
+                              <button class="btn btn-primary btn-block" type="submit" [disabled]="!f.form.valid">Save</button>
+                            </div>
+                            <div class="col-4">
+                              <button class="btn btn-primary btn-block" type="button" (click)="clearForm(f)" >New</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-primary btn-block" type="button" routerLink="/menu" >Menu</button>
+                              </div>
+                          </div>
+                    </form>
+                    
+                </div>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+</div>
