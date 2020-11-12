@@ -15,7 +15,7 @@ export class AdminAuthGuard implements CanActivate {
   canActivate(route, state: RouterStateSnapshot): Observable<boolean> {
     return this.auth.appUser$
     .pipe(map(appUser => {
-      if (appUser.isAdmin) return true;
+      if (appUser.permissions === 'Admin') return true;
       else {
         this.router.navigate(['/'], { queryParams: { returnUrl: state.url }});
         return false;

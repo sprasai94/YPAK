@@ -23,10 +23,12 @@ export class UserManagementComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { 
-      this.id = this.route.snapshot.paramMap.get('id');
-      if (this.id) this.userService.get(this.id).valueChanges().pipe(take(1)).
-        subscribe(u => this.user = u);
-     }
+      this.route.params.subscribe((params = {}) => {
+        this.id = this.route.snapshot.paramMap.get('id');
+        if (this.id) this.userService.get(this.id).valueChanges().pipe(take(1)).
+          subscribe(u => this.user = u);
+        });
+    }
 
   save(user) {
     if (this.id) this.userService.update(this.id, user);
@@ -35,7 +37,7 @@ export class UserManagementComponent implements OnInit {
   
   }
   clearForm(form:NgForm) {
-    form.resetForm();
+    this.router.navigate(['/user-management']);
   }
 
   get(userId){
@@ -60,7 +62,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   filter(query: string) {
-    console.log(query)
     this.filteredUsers = (query) ?
      this.users.filter(u => u.name.toLowerCase().includes(query.toLowerCase())) :
      this.users;

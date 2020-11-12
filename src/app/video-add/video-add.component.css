@@ -1,0 +1,23 @@
+.list-group-item {
+    padding: 4px 10px;
+    height: 30px;
+    font-size:0.7rem;
+    
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+ul {
+    list-style: none;
+    max-height: 150px;
+    margin: 0;
+    padding: 0 ;
+    text-indent: auto;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+li{
+    line-height:15px;
+    white-space: nowrap;
+}

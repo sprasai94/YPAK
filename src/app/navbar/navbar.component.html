@@ -15,7 +15,7 @@
           <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ appUser.email }}</a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <ng-container *ngIf="appUser.isAdmin">
+            <ng-container *ngIf="appUser.permissions === 'Admin'">
               <a class="dropdown-item" routerLink="/menu">Menu</a>
             </ng-container>
             <a class="dropdown-item" (click)="logout()">Log Out</a>

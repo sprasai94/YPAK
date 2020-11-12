@@ -4,6 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ConditionalExpr } from '@angular/compiler';
+import { Router, ActivatedRoute } from '@angular/router';
+import { take, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
+
 
 @Component({
   selector: 'app-video-add',
@@ -13,21 +18,41 @@ import { ConditionalExpr } from '@angular/compiler';
 export class VideoAddComponent implements OnInit {
   
   files : any [] = [];
+  videos: VideoProperties[] = [];
+  filteredVideos: VideoProperties[] = [];
+  video = {};
+  id;
+  constructor(
+    private afs: AngularFireStorage, 
+    private fileService: FileService,
+    private router: Router,
+    private route: ActivatedRoute) { 
+      this.route.params.subscribe((params = {}) => {
+        this.id = this.route.snapshot.paramMap.get('id');
+        if (this.id) this.fileService.get(this.id).valueChanges().pipe(take(1)).
+          subscribe(u => this.video = u);
+        });
+    }
+     
 
-  constructor(private afs: AngularFireStorage, private fileService: FileService) { }
   onSelect(event) {
     var file = event.target.files[0];
     this.files.push(file);
   }
   async save(form) {
+    if (this.id) {
+      this.update(form);
+    }
+    else {
+      console.log(form);
     let video = {} as VideoProperties;
     video = await this.uploadVideos(form, video);
    
     video.title = form.title;
     video.description = form.description;
-    video.leftVidUrl = video.leftVidUrl;
-    video.rightVidUrl = video.rightVidUrl;
+    video.deactivate = form.deactivate ? true: false;
     this.fileService.create(video);
+    }
   }
 
   async uploadVideos(form, video): Promise<VideoProperties> {
@@ -36,14 +61,17 @@ export class VideoAddComponent implements OnInit {
         for(let index = 0; index < filesList.length; index = index + 1) {
             let file = filesList[index];
             let fileID = Math.random();
-            //const storagePath = ${'Videos/'}${file.name}_${new Date().getTime()};
-            const storagePath = "/Videos/"+fileID;
+            const storagePath = `${'Videos/'}${file.name.split('.').slice(0,-1).join('.')}_${new Date().getTime()}`;
+            //const storagePath = "/Videos/"+fileID;
             const ref = this.afs.ref(storagePath);
-
-            const uploadTask = ref.put(file,
-                { customMetadata: { Title: form.title, Description: form.description } });
-
-            // const asyncUploadTask = this.promiseWrapper(uploadTask);
+            if (index == 0) {
+              video.leftVidPath = storagePath;
+            } else {
+              video.rightVidPath = storagePath;
+            }
+            const uploadTask = ref.put(file);
+            // const uploadTask = ref.put(file,
+            //     { customMetadata: { Title: form.title, Description: form.description } });
 
             await uploadTask.then(async (uploadSnapshot: firebase.storage.UploadTaskSnapshot) => {
                 //Fetch the download URL of the Storage file
@@ -67,11 +95,28 @@ export class VideoAddComponent implements OnInit {
     }
       return video;
     }
-
   clearForm(form:NgForm) {
-    form.resetForm();
+    this.router.navigate(['/video-add']);
+  }
+  update(video) {
+    this.fileService.update(this.id, video);
   }
   ngOnInit(): void {
+    this.populateVideos();
   }
+  private populateVideos() {
+    this.fileService
+      .getAll()
+      .pipe(switchMap(videos => {
+        this.videos = this.filteredVideos= videos.filter(v => !v.deactivate);
+        return this.route.queryParamMap;
+      })).subscribe()
+    }
 
+    filter(query: string) {
+      this.filteredVideos = (query) ?
+       this.videos.filter(u => (u.title.toLowerCase().includes(query.toLowerCase())) && !u.deactivate) :
+       this.videos.filter(v => !v.deactivate);
+    }
+   
 }

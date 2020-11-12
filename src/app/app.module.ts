@@ -60,10 +60,15 @@ import { VideoAddComponent } from './video-add/video-add.component';
       canActivate: [AuthGuard, AdminAuthGuard]
     },
     {
+      path: 'video-add/:id',
+      component: VideoAddComponent,
+      canActivate: [AuthGuard, AdminAuthGuard]
+    },
+    {
       path: 'video-add',
       component: VideoAddComponent,
       canActivate: [AuthGuard, AdminAuthGuard]
-    }
+    },
     ]),
     BrowserAnimationsModule,
     NgbModule
