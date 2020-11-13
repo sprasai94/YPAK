@@ -7,6 +7,12 @@
             
             <div class="row">
                 <div class="col-md-7">
+                    <div *ngIf="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Form submission successful.
+                        <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <form #f="ngForm" (ngSubmit)='save(f.value);f.reset()'>
                         <div class="form-group">
                             <label for="name" >Name</label>

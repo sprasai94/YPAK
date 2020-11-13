@@ -7,10 +7,16 @@
             
             <div class="row">
                 <div class="col-md-7">
+                    <div *ngIf="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Form submission successful.
+                        <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <form #f="ngForm" (ngSubmit)='save(f.value);f.reset()'>
                         <div class="form-group" *ngIf="!id">
                             <label for="leftvideo">Left Video</label>
-                            <input #leftvideo="ngModel" ngModel name="leftvideo" id="leftvideo" type="file" (change)="onSelect($event)" accept="video/*" class="form-control" required>
+                            <input #leftvideo="ngModel" ngModel name="leftvideo" id="leftvideo" type="file" (change)="onSelect($event)" accept="video/*" class="form-control-file" required>
                             <!-- <div class="alert alert-danger" *ngIf="leftvideo.touched && leftvideo.invalid">
                                 Left Video is required.
                             </div> -->
@@ -18,7 +24,7 @@
 
                         <div class="form-group" *ngIf="!id">
                             <label for="rightvideo">Right Video</label>
-                            <input #rightvideo="ngModel" [(ngModel)]="video.rightVidPath" name="rightvideo" id="rightvideo" type="file" (change)="onSelect($event)" accept="video/*" class="form-control">
+                            <input #rightvideo="ngModel" [(ngModel)]="video.rightVidPath" name="rightvideo" id="rightvideo" type="file" (change)="onSelect($event)" accept="video/*" class="form-control-file">
                             <!-- <div class="alert alert-danger" *ngIf="leftvideo.touched && leftvideo.invalid">
                                 Left Video is required.
                             </div> -->

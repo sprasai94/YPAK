@@ -21,6 +21,7 @@ export class VideoAddComponent implements OnInit {
   videos: VideoProperties[] = [];
   filteredVideos: VideoProperties[] = [];
   video = {};
+  alert: boolean = false;
   id;
   constructor(
     private afs: AngularFireStorage, 
@@ -41,10 +42,9 @@ export class VideoAddComponent implements OnInit {
   }
   async save(form) {
     if (this.id) {
+      console.log(form, this.id);
       this.update(form);
-    }
-    else {
-      console.log(form);
+    } else {
     let video = {} as VideoProperties;
     video = await this.uploadVideos(form, video);
    
@@ -53,6 +53,8 @@ export class VideoAddComponent implements OnInit {
     video.deactivate = form.deactivate ? true: false;
     this.fileService.create(video);
     }
+    this.alert = true;
+    console.log(alert);
   }
 
   async uploadVideos(form, video): Promise<VideoProperties> {
@@ -60,7 +62,7 @@ export class VideoAddComponent implements OnInit {
         const filesList = this.files;
         for(let index = 0; index < filesList.length; index = index + 1) {
             let file = filesList[index];
-            let fileID = Math.random();
+            // let fileID = Math.random();
             const storagePath = `${'Videos/'}${file.name.split('.').slice(0,-1).join('.')}_${new Date().getTime()}`;
             //const storagePath = "/Videos/"+fileID;
             const ref = this.afs.ref(storagePath);
@@ -96,6 +98,7 @@ export class VideoAddComponent implements OnInit {
       return video;
     }
   clearForm(form:NgForm) {
+    this.alert = false;
     this.router.navigate(['/video-add']);
   }
   update(video) {
@@ -113,10 +116,14 @@ export class VideoAddComponent implements OnInit {
       })).subscribe()
     }
 
-    filter(query: string) {
-      this.filteredVideos = (query) ?
-       this.videos.filter(u => (u.title.toLowerCase().includes(query.toLowerCase())) && !u.deactivate) :
-       this.videos.filter(v => !v.deactivate);
-    }
+  filter(query: string) {
+    this.filteredVideos = (query) ?
+      this.videos.filter(u => (u.title.toLowerCase().includes(query.toLowerCase())) && !u.deactivate) :
+      this.videos.filter(v => !v.deactivate);
+  }
+  closeAlert() {
+    this.alert = false;
+    this.router.navigate(['/video-add']);
+  }
    
 }

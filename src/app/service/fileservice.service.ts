@@ -21,6 +21,6 @@ export class FileService{
     return getObservableFromList(list);
   }
   update(videoId, video) {
-    this.db.object('/videos/'+ videoId).update({title: video.title, description: video.description, deactivate: video.deactivate });
+    this.db.object('/videos/'+ videoId).update({title: video.title, description: video.description, deactivate: video.deactivate ? true: false });
   }
 }

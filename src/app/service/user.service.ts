@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { AppUser } from '../models/app-user';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';

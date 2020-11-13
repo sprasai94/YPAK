@@ -16,6 +16,8 @@ export class UserManagementComponent implements OnInit {
   users: AppUser[] = [];
   filteredUsers: AppUser[] = [];
   user = {};
+  msg: string = null;
+  alert: boolean = false;
   id;
 
   constructor(
@@ -25,15 +27,18 @@ export class UserManagementComponent implements OnInit {
     private route: ActivatedRoute) { 
       this.route.params.subscribe((params = {}) => {
         this.id = this.route.snapshot.paramMap.get('id');
-        if (this.id) this.userService.get(this.id).valueChanges().pipe(take(1)).
+        if (this.id) {
+          this.userService.get(this.id).valueChanges().pipe(take(1)).
           subscribe(u => this.user = u);
+        }
         });
     }
 
   save(user) {
-    if (this.id) this.userService.update(this.id, user);
+    if (this.id) this.auth.updateUser(this.id, user);
     else this.auth.createUser(user);
-    this.router.navigate(['/user-management']);
+    this.alert =true;
+    //this.router.navigate(['/user-management']);
   
   }
   clearForm(form:NgForm) {
@@ -65,6 +70,11 @@ export class UserManagementComponent implements OnInit {
     this.filteredUsers = (query) ?
      this.users.filter(u => u.name.toLowerCase().includes(query.toLowerCase())) :
      this.users;
+  }
+
+  closeAlert() {
+    this.alert = false;
+    this.router.navigate(['/user-management']);
   }
 
 }
