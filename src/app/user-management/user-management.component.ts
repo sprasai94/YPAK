@@ -15,7 +15,7 @@ import { NgForm } from '@angular/forms';
 export class UserManagementComponent implements OnInit {
   users: AppUser[] = [];
   filteredUsers: AppUser[] = [];
-  user = {};
+  user : AppUser = { name:'',email:'',permissions:'',password:null,phone:null};
   msg: string = null;
   alert: boolean = false;
   id;

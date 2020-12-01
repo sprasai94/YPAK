@@ -20,7 +20,15 @@ export class VideoAddComponent implements OnInit {
   files : any [] = [];
   videos: VideoProperties[] = [];
   filteredVideos: VideoProperties[] = [];
-  video = {};
+  video : VideoProperties = { 
+    leftVidPath: '',
+    rightVidPath: "",
+    title: '',
+    deactivate: null,
+    description: '',
+    leftVidUrl: '',
+    rightVidUrl: ''
+  };
   alert: boolean = false;
   id;
   constructor(

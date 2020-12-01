@@ -35,8 +35,10 @@ export class AuthService {
     var result = await this.afAuth.signInWithEmailAndPassword(
       formData.value.email, 
       formData.value.password
-      );
-    this.router.navigate(['/']);
+      ).catch(function(error) {
+        alert(error.message);
+      });
+    this.router.navigate(['']);
   }
   
   async createUser(user) {
