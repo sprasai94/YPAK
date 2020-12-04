@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VideoAddComponent } from './video-add/video-add.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { VideoAddComponent } from './video-add/video-add.component';
     LoginComponent,
     MenuComponent,
     UserManagementComponent,
-    VideoAddComponent
+    VideoAddComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,9 @@ import { VideoAddComponent } from './video-add/video-add.component';
     { path:'menu', 
       component: MenuComponent, 
       canActivate: [AuthGuard, AdminAuthGuard] 
+    },
+    { path:'contact', 
+    component: ContactComponent
     },
     { path: 'user-management/:id', 
     component: UserManagementComponent, 

@@ -1,0 +1,48 @@
+.navBar {
+    background-color: rgb(99, 99, 99);
+    line-height: 0.5;
+    font-size: 0.2rem;
+    
+}
+
+.navBar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 4px;
+    margin-left: 0;
+    margin-right: 0;
+    transition: all 0.5s ease-in-out;
+  }
+.navBar a:hover {
+    color: black;
+    background-color: rgba(250, 231, 231, 0.8); 
+  }
+
+.dropdown-toggle {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+.dropdown-menu {
+  width: 90%;
+  padding: 0;
+  margin-left: 15px;
+}
+  
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+.dropdown-menu a:hover {
+  background-color: rgb(250, 231, 231, 0.8);
+}
+.dropdown-item {
+  cursor: pointer;
+}

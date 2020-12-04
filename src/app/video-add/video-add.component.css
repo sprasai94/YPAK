@@ -1,9 +1,3 @@
-.list-group-item {
-    padding: 4px 10px;
-    height: 30px;
-    font-size:0.7rem;
-    
-}
 input[type=checkbox] {
     transform: scale(1.5);
 }
@@ -21,3 +15,17 @@ li{
     line-height:15px;
     white-space: nowrap;
 }
+.list-group-item {
+    padding: 4px 10px;
+    height: 30px;
+    font-size:0.7rem;
+    
+}
+.card-background {
+    background-color: rgb(243, 240, 237);
+}
+li.list-group-item {
+    background-color: rgb(248, 244, 239);
+    color: white;
+}
+
